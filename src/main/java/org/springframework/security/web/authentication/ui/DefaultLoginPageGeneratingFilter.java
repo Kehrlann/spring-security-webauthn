@@ -384,9 +384,7 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 
 					// Invoke the WebAuthn get() method.
 					const cred = await navigator.credentials.get({
-						publicKey: options,
-						// Request a conditional UI
-						mediation: 'conditional'
+						publicKey: options
 					});
 					const { response, credType } = cred;
 					let userHandle = undefined;
