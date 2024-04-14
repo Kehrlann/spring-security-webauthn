@@ -80,7 +80,7 @@ public class WebauthnConfigurer<B extends HttpSecurityBuilder<B>>
 		WebAuthnRelyingPartyOperations rpOperations = webAuthnRelyingPartyOperations(userEntities, userCredentials);
 		WebAuthnAuthenticationFilter webAuthnAuthnFilter = new WebAuthnAuthenticationFilter();
 		webAuthnAuthnFilter.setAuthenticationManager(new ProviderManager(new WebAuthnAuthenticationProvider(rpOperations, userDetailsService)));
-		http.addFilterBefore(webAuthnAuthnFilter, BasicAuthenticationFilter.class);
+		http.addFilterBefore(this.postProcess(webAuthnAuthnFilter), BasicAuthenticationFilter.class);
 		http.addFilterAfter(new WebAuthnRegistrationFilter(userCredentials, rpOperations), AuthorizationFilter.class);
 		// FIXME: Anonymous users should not be able to register a key
 		http.addFilterBefore(new PublicKeyCredentialCreationOptionsFilter(rpOperations), AuthorizationFilter.class);
