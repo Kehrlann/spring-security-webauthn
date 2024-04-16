@@ -32,16 +32,14 @@ public class SecurityConfig {
 	DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
 		http
 			.formLogin(Customizer.withDefaults())
-			.httpBasic(Customizer.withDefaults())
 			.authorizeHttpRequests(requests -> requests
-				.requestMatchers("/login/**", "/message").permitAll()
+				.requestMatchers("/login/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.with(new WebauthnConfigurer<>(), (passkeys) -> passkeys
 					.rpName("Spring Security Relying Party")
-					.rpId("example.localhost")
-//					.rpId("test-host")
-					.allowedOrigins("https://example.localhost:8443", "https://test-host:8443")
+					.rpId("localhost")
+					.allowedOrigins("http://localhost:8080")
 			);
 		return http.build();
 	}
